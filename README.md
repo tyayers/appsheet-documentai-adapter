@@ -18,7 +18,7 @@ Set these environment variables when deploying.
 | MONGO_CONNECTION_STRING          | The connection string to your Mongo DB                    |
 | GCP_PROJECT                      | The GCP project of the document AI processor              |
 | GCP_DOCAI_REGION                 | The Document AI region (EU or US)                         |
-| GCP_DOCAI_PROCESSOR_ID           | The Document AI processor ID from the document AI portal  |
+| GCP_DOCAI_PROCESSOR_ID           | The Document AI processor ID                              |
 
 ## Configuration in AppSheet
 
