@@ -17,8 +17,8 @@ Set these environment variables when deploying.
 | GOOGLE_APPLICATION_CREDENTIALS   | The path to your GCP service account credentials key file |
 | MONGO_CONNECTION_STRING          | The connection string to your Mongo DB                    |
 | GCP_PROJECT                      | The GCP project of the document AI processor              |
-| GCP_DOCAI_REGION                 | The document UI region (EU or US)                         |
-| GCP_DOCAI_PROCESSOR_ID           | The document UI processor ID from the document AI portal  |
+| GCP_DOCAI_REGION                 | The Document AI region (EU or US)                         |
+| GCP_DOCAI_PROCESSOR_ID           | The Document AI processor ID from the document AI portal  |
 
 ## Configuration in AppSheet
 
