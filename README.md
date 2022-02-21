@@ -22,4 +22,4 @@ Set these environment variables when deploying.
 
 ## Configuration in AppSheet
 
-Once the service is deployed, you can then configure your service endpoint as an API (Apigee) data source, and then connect into an app as a data source that can take a "File" type from a related table, so for example connecting to file attachments to get the document AI processing and display to the user.
+After deploying the service, create a version of the **apispec.yaml** with your cloud run service URL, and add to your AppSheet account data source using a link to the API spec.  Then you can add the data source to your app and upload files to be processed by DocAI.
