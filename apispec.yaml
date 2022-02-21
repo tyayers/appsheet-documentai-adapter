@@ -1,0 +1,167 @@
+
+openapi: 3.0.3
+info:
+  description: API for managing Formfield resources.
+  version: 0.0.1
+  title: Formfields API
+servers:
+- url: https://docaiservice-h7pi7igbcq-ew.a.run.app
+security: []
+paths:
+  /formfields:
+    get:
+      summary: List 'Formfield' objects.
+      description: Retrieve a page of 'Formfield' objects from the server.  Follows
+        the standards for parameters from the [List AIP](  https://aip.dev/132).
+      parameters:
+      - name: pageSize
+        in: query
+        description: Max size of returned list.
+        schema:
+          type: integer
+          default: "25"
+      - name: pageToken
+        in: query
+        description: A page token recieved from the previous list call. Provide this
+          to retrieve the next page.
+        schema:
+          type: string
+      - name: orderBy
+        in: query
+        description: The ordering of the returned list. See the [List Ordering API](
+          https://aip.dev/132) for details on the formatting of this field.
+        schema:
+          type: string
+          default: displayName
+      - name: filter
+        in: query
+        description: Filter that will be used to select Formfield objects to return.
+          See the [Filtering AIP](https://aip.dev/160) for usage and details on the
+          filtering grammar.
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  formfields:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ListOfFormfields'
+    post:
+      summary: Creates a new 'Formfield' object.
+      description: Creates a new 'Formfield' object.
+      requestBody:
+        description: The Formfield object to create.
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Formfield'
+      responses:
+        "201":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Formfield'
+  /formfields/{formfield}:
+    get:
+      summary: Retrieve Formfield object.
+      description: Retrieve a single Formfield object.
+      parameters:
+      - name: formfield
+        in: path
+        required: true
+        description: Unique identifier of the desired Formfield object.
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Formfield'
+        "404":
+          description: Formfield was not found.
+    put:
+      summary: Update Formfield object.
+      description: Update a single Formfield object.
+      parameters:
+      - name: formfield
+        in: path
+        required: true
+        description: Unique identifier of the desired Formfield object.
+        schema:
+          type: string
+      requestBody:
+        description: The Formfield object to update.
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Formfield'
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Formfield'
+        "404":
+          description: Formfield was not found.
+    delete:
+      summary: Delete Formfield object.
+      description: Delete a single Formfield object.
+      parameters:
+      - name: formfield
+        in: path
+        required: true
+        description: Unique identifier of the desired Formfield object.
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Formfield was not found.
+components:
+  securitySchemes: {}
+  schemas:
+    Formfield:
+      title: Formfield
+      type: object
+      properties:
+        _id:
+          description: The _id of the Formfield
+          type: string
+          example: 61423ce41b520b8e9296fca3
+        documentId:
+          description: The documentId of the Formfield
+          type: string
+          example: jdkjrk3
+        documentPath:
+          description: The documentPath of the Formfield
+          type: string
+          example: /path/to/doc
+        formFields:
+          description: The formFields of the Formfield
+          type: string
+          example: "\nEnglish\n=☑ \nFrançais\n=\nEsperanto\n=\nHouse nr: =88\n\nPostcode:\n=12345\n\nDeutsch
+            =☐ \nLatin\n=☐ \nGender:\n=Man\n\nCity: =Hobiton\n\nGiven Name:\n=Bilbo\n\nFamily
+            Name:\n=Baggins\n\nAddress 1:\n=Bag End\n\nHeight (cm):\n=65\n\nCountry:\n=The
+            Shire\n\nFavourite colour:\n=Red\n\nDriving License:\n="
+        formId:
+          description: The formId of the Formfield
+          type: string
+          example: test123
+    ListOfFormfields:
+      title: List of Formfield objects
+      type: array
+      items:
+        $ref: '#/components/schemas/Formfield'
