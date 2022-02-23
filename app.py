@@ -30,7 +30,17 @@ app = web.application(urls, globals())
 class formfields:
 
   result = {
-    "formfields": []
+    "formfields": [
+      {
+        "formId": "test1",
+        "documentId": "e111806a",
+        "documentPath": "Document AI Forms_Files_/e111806a.Attachment.162159.pdf",
+        "fieldsText": "\nEnglish=☑ \nFrançais=\nEsperanto=\nHouse nr=1\nPostcode=11111\nDeutsch=☐ \nLatin=☐ \nGender=Man\nCity=Hobbiton\nCountry=Britain\nGiven Name=Bilbo\nHeight (cm)=100\nAddress 1=Bag End\nAddress 2=Under Hill\nFamily Name=Baggins\nFavourite colour=Red\nDriving License=",
+        "formThumbnail": "https://storage.googleapis.com/bruno-hosting/appsheet/form_thumb.png",
+        "totalFields": 17,
+        "filledFields": 14
+      }
+    ]
   }
 
   # Returns all of the formfields
