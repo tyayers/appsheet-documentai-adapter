@@ -7,6 +7,10 @@
         },
         "GCP_DOCAI_PROCESSOR_ID": {
             "description": "The Document AI form processor ID from the deployment (visible in the overview information for the processor)."
+        },
+        "API_KEY": {
+            "generator": "secret",
+            "description": "A secret that to be used to access the API."
         }
     },
     "options": {
