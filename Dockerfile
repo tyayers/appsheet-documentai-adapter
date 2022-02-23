@@ -1,7 +1,5 @@
 FROM python:latest
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=key.json
-
 # Create app directory
 WORKDIR /app
 

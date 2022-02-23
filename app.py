@@ -1,10 +1,10 @@
+import pprint
 from proto import fields
 import web
 import json
 import logging
 import urllib
 import requests
-import pymongo
 import io
 import os
 from googleapiclient.http import MediaIoBaseDownload
@@ -15,57 +15,34 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
-SERVICE_ACCOUNT_FILE = 'key.json'
+import google.auth
+
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
-MONGO_CONNECTION_STRING = os.getenv('MONGO_CONNECTION_STRING')
-project_id= os.getenv('GCP_PROJECT')
 location = os.getenv('GCP_DOCAI_REGION')
 processor_id = os.getenv('GCP_DOCAI_PROCESSOR_ID')
 
 urls = (
-  '/formfields(.*)', 'formfields'
+  '/formfields(.*)', 'formfields',
+  '/spec(.*)', 'openapispec'
 )
 app = web.application(urls, globals())
 
 class formfields:
+
+  result = {
+    "formfields": []
+  }
+
+  # Returns all of the formfields
   def GET(self, name):
 
-    client = pymongo.MongoClient()
-    db = client["appsheet_data"]
-
-    mycol = db["forms"]
-
-    result = {
-      "formfields": []
-    }
-
-    for x in mycol.find():
-      # fieldsRecord = {}
-      # for key in x:
-      #   fieldsRecord[key] = x[key]
-
-      # result["formfields"].append(fieldsRecord)
-      result["formfields"].append({
-        "formId": x["formId"],
-        "_id":  str(x["_id"]),
-        "formFields": x["fieldsText"],
-        "documentPath": x["documentPath"],
-        "documentId": x["documentId"],
-        "formThumbnail": x["formThumbnail"],
-        "totalFields": x["totalFields"],
-        "filledFields": x["filledFields"]
-      })
+    pprint.pprint(web.ctx.home + web.ctx.fullpath)
 
     web.header('Content-Type', 'application/json')
-    return json.dumps(result)
+    return json.dumps(self.result)
 
+  # Posts a new form to be processed
   def POST(self, name):
-    logging.info("hello world!")
-
-    client = pymongo.MongoClient(MONGO_CONNECTION_STRING)
-    db = client["appsheet_data"]
-
-    mycol = db["forms"]
 
     data = json.loads(web.data())
 
@@ -91,27 +68,32 @@ class formfields:
     if documentPath:
       fieldsInfo = callDocAI(documentPath)
       
-    # newRecord["formFields"] = fieldsInfo["fieldsText"]
-    # newRecord["formThumbnail"] = fieldsInfo["formThumbnail"]
-      
     for key in fieldsInfo:
       newRecord[key] = fieldsInfo[key]
 
-    x = mycol.insert_one(newRecord)
-    newRecord["_id"] = str(x.inserted_id)
-
+    self.result["formfields"].append(newRecord)
+    
     web.header('Content-Type', 'application/json')
     return json.dumps(newRecord)
 
+# Returns the OpenAPI spec, filled in with the current server
+class openapispec:
 
+  #Returns the OpenAPI spec, filled in with the current server
+  def GET(self, name):
+    f = open("apispec.yaml", "r")
+    spec = f.read()
+    spec = spec.replace("SERVER_URL", web.ctx.home.replace("http://", "https://"))
+    web.header('Content-Type', 'text/plain;charset=UTF-8')
+    return spec
+
+# Leftover for testing.. not used.
 def quickstart(project_id: str, location: str, processor_id: str, file_path: str):
-
-    
 
     # You must set the api_endpoint if you use a location other than 'us', e.g.:
     opts = {}
     if location == "eu":
-        opts = {"api_endpoint": "eu-documentai.googleapis.com"}
+      opts = {"api_endpoint": "eu-documentai.googleapis.com"}
 
     client = documentai.DocumentProcessorServiceClient(client_options=opts)
 
@@ -162,6 +144,7 @@ def quickstart(project_id: str, location: str, processor_id: str, file_path: str
         #     paragraph_text = get_text(paragraph.layout, document)
         #     print(f"Paragraph text: {paragraph_text}")
 
+# Helper function to get text from form fields
 def _get_text(el, document):
     """Doc AI identifies form fields by their offsets
     in document text. This function converts offsets
@@ -176,6 +159,7 @@ def _get_text(el, document):
         response += document.text[start_index:end_index]
     return response
 
+# Helper function to get text from form fields
 def get_text(doc_element: dict, document: dict):
     """
     Document AI identifies form fields by their offsets
@@ -195,6 +179,7 @@ def get_text(doc_element: dict, document: dict):
         response += document.text[start_index:end_index]
     return response
 
+# Method to call the Document AI API and get the form processing results
 def callDocAI(documentPath: str):
 
   output = {
@@ -204,8 +189,9 @@ def callDocAI(documentPath: str):
     "filledFields": 0
   }
 
-  creds = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+  creds, project_id = google.auth.default(scopes=SCOPES)
+  #creds = service_account.Credentials.default(scopes=SCOPES)
+
   service = build('drive', 'v3', credentials=creds)
   page_token = None
 

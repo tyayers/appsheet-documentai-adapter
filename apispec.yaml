@@ -1,11 +1,10 @@
-
 openapi: 3.0.3
 info:
   description: API for managing Formfield resources.
   version: 0.0.1
   title: Formfields API
 servers:
-- url: https://docaiservice-h7pi7igbcq-ew.a.run.app
+- url: SERVER_URL
 security: []
 paths:
   /formfields:
