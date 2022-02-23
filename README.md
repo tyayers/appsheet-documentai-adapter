@@ -14,12 +14,9 @@ Set these environment variables when deploying.
 
 | Env name                         | Env description                                           |
 | -------------------------------- | --------------------------------------------------------- |
-| GOOGLE_APPLICATION_CREDENTIALS   | The path to your GCP service account credentials key file |
-| MONGO_CONNECTION_STRING          | The connection string to your Mongo DB                    |
-| GCP_PROJECT                      | The GCP project of the document AI processor              |
-| GCP_DOCAI_REGION                 | The Document AI region (EU or US)                         |
-| GCP_DOCAI_PROCESSOR_ID           | The Document AI processor ID                              |
+| GCP_DOCAI_REGION                 | The Document AI region (eu or us)                         |
+| GCP_DOCAI_PROCESSOR_ID           | The Document AI processor ID (from the GCP console)       |
 
 ## Configuration in AppSheet
 
-After deploying the service, create a version of the **apispec.yaml** with your cloud run service URL, and add to your AppSheet account data source using a link to the API spec.  Then you can add the data source to your app and upload files to be processed by DocAI.
+After deploying the service, add a new **Apigee** data source to your AppSheet account pointing to the deployed service URL + "/spec".
