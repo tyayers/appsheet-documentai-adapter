@@ -1,0 +1,15 @@
+{
+    "name": "document-ai-adapter",
+    "env": {
+        "GCP_DOCAI_REGION": {
+            "value": "eu",
+            "description": "Region (eu or us) where the Document AI form processor is deployed."
+        },
+        "GCP_DOCAI_PROCESSOR_ID": {
+            "description": "The Document AI form processor ID from the deployment (visible in the overview information for the processor)."
+        }
+    },
+    "options": {
+        "allow-unauthenticated": true
+    }
+}
