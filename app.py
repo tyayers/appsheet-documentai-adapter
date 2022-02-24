@@ -23,7 +23,7 @@ processor_id = os.getenv('GCP_DOCAI_PROCESSOR_ID')
 
 urls = (
   '/formfields(.*)', 'formfields',
-  '/spec(.*)', 'openapispec'
+  '/(.*)', 'openapispec'
 )
 app = web.application(urls, globals())
 
@@ -32,8 +32,8 @@ class formfields:
   result = {
     "formfields": [
       {
-        "formId": "test1",
-        "documentId": "e111806a",
+        "formId": "bec38fd6",
+        "documentId": "bec38fd6",
         "documentPath": "Document AI Forms_Files_/e111806a.Attachment.162159.pdf",
         "fieldsText": "\nEnglish=☑ \nFrançais=\nEsperanto=\nHouse nr=1\nPostcode=11111\nDeutsch=☐ \nLatin=☐ \nGender=Man\nCity=Hobbiton\nCountry=Britain\nGiven Name=Bilbo\nHeight (cm)=100\nAddress 1=Bag End\nAddress 2=Under Hill\nFamily Name=Baggins\nFavourite colour=Red\nDriving License=",
         "formThumbnail": "https://storage.googleapis.com/bruno-hosting/appsheet/form_thumb.png",
@@ -47,6 +47,8 @@ class formfields:
   def GET(self, name):
 
     pprint.pprint(web.ctx.home + web.ctx.fullpath)
+    
+    pprint.pprint(self.result)
 
     web.header('Content-Type', 'application/json')
     return json.dumps(self.result)
@@ -83,6 +85,8 @@ class formfields:
 
     self.result["formfields"].append(newRecord)
     
+    pprint.pprint(newRecord)
+
     web.header('Content-Type', 'application/json')
     return json.dumps(newRecord)
 

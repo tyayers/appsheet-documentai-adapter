@@ -1,4 +1,4 @@
-export servicename=docaiservice
+export servicename=document-ai-adapter
 export PROJECT_ID=$(gcloud config get-value project)
 export REGION=europe-west1
 export ENV=GCP_DOCAI_REGION=eu,GCP_DOCAI_PROCESSOR_ID=26e59ef1d2cc780
