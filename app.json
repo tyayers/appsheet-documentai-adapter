@@ -15,5 +15,13 @@
     },
     "options": {
         "allow-unauthenticated": true
+    },
+    "hooks": {
+        "postcreate": {
+            "commands": [
+                "gcloud services enable firebase.googleapis.com",
+                "gcloud firestore databases create --region=$GOOGLE_CLOUD_REGION"
+            ]
+        }
     }
 }
