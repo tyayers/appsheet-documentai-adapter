@@ -23,7 +23,7 @@
                 "gcloud services enable appengine.googleapis.com",
                 "gcloud services enable firebase.googleapis.com",
                 "gcloud app create --region=europe-west",
-                "gcloud firestore databases create",
+                "gcloud firestore databases create --region=europe-west",
                 "echo hello",
                 "echo $API_KEY"
             ]
