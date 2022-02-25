@@ -19,6 +19,7 @@
     "hooks": {
         "postcreate": {
             "commands": [
+                "gcloud config set project $GOOGLE_CLOUD_PROJECT",
                 "gcloud services enable firebase.googleapis.com",
                 "gcloud firestore databases create --region=$GOOGLE_CLOUD_REGION"
             ]
