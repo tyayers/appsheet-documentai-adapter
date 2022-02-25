@@ -17,7 +17,7 @@
         "allow-unauthenticated": true
     },
     "hooks": {
-        "postcreate": {
+        "postbuild": {
             "commands": [
                 "gcloud config set project $GOOGLE_CLOUD_PROJECT",
                 "gcloud services enable firebase.googleapis.com",
