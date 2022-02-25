@@ -22,6 +22,7 @@
                 "gcloud config set project $GOOGLE_CLOUD_PROJECT",
                 "gcloud services enable appengine.googleapis.com",
                 "gcloud services enable firebase.googleapis.com",
+                "gcloud app create --region=$GOOGLE_CLOUD_PROJECT",
                 "gcloud firestore databases create --region=$GOOGLE_CLOUD_REGION",
                 "echo hello",
                 "echo $API_KEY"
