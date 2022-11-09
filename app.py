@@ -35,7 +35,7 @@ class formfields:
         "formId": "bec38fd6",
         "documentId": "bec38fd6",
         "documentPath": "Document AI Forms_Files_/e111806a.Attachment.162159.pdf",
-        "fieldsText": "\nEnglish=☑ \nFrançais=\nEsperanto=\nHouse nr=1\nPostcode=11111\nDeutsch=☐ \nLatin=☐ \nGender=Man\nCity=Hobbiton\nCountry=Britain\nGiven Name=Bilbo\nHeight (cm)=100\nAddress 1=Bag End\nAddress 2=Under Hill\nFamily Name=Baggins\nFavourite colour=Red\nDriving License=",
+        "formFields": "\nEnglish=☑ \nFrançais=\nEsperanto=\nHouse nr=1\nPostcode=11111\nDeutsch=☐ \nLatin=☐ \nGender=Man\nCity=Hobbiton\nCountry=Britain\nGiven Name=Bilbo\nHeight (cm)=100\nAddress 1=Bag End\nAddress 2=Under Hill\nFamily Name=Baggins\nFavourite colour=Red\nDriving License=",
         "formThumbnail": "https://storage.googleapis.com/bruno-hosting/appsheet/form_thumb.png",
         "totalFields": 17,
         "filledFields": 14
@@ -73,7 +73,7 @@ class formfields:
     }
 
     fieldsInfo = {
-      "fieldsText": "",
+      "formFields": "",
       "formThumbnail": ""
     }
 
@@ -197,7 +197,7 @@ def get_text(doc_element: dict, document: dict):
 def callDocAI(documentPath: str):
 
   output = {
-    "fieldsText": "",
+    "formFields": "",
     "formThumbnail": "",
     "totalFields": 0,
     "filledFields": 0
@@ -251,22 +251,22 @@ def callDocAI(documentPath: str):
 
   document_pages = document.pages
 
-  fieldsText = ""
+  formFields = ""
   for page in document_pages:
     for form_field in page.form_fields:
       fieldLabel = _get_text(form_field.field_name, document).replace("\n", "").replace(":", "").strip()
       fieldValue = _get_text(form_field.field_value, document).replace("\n", "")
-      fieldsText += "\n" + fieldLabel + "=" + fieldValue
+      formFields += "\n" + fieldLabel + "=" + fieldValue
 
       output["totalFields"] = output["totalFields"] + 1
       if fieldValue != "":
         output["filledFields"] = output["filledFields"] + 1
 
-  output["fieldsText"] = fieldsText
+  output["formFields"] = formFields
   return output
 
-# fieldsText = callDocAI("Customer_Files_/9a62a9a8.Document.184617.pdf")
-# print(fieldsText)
+# formFields = callDocAI("Customer_Files_/9a62a9a8.Document.184617.pdf")
+# print(formFields)
 
 if __name__ == "__main__":
   app.run()
