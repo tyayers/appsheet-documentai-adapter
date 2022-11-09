@@ -16,7 +16,7 @@ Set these environment variables when deploying.
 | -------------------------------- | --------------------------------------------------------- |
 | GCP_DOCAI_REGION                 | The Document AI region (eu or us)                         |
 | GCP_DOCAI_PROCESSOR_ID           | The Document AI processor ID (from the GCP console)       |
-| API_KEY                          | An secret that AppSheet can use to call this API          |
+| API_KEY                          | A secret that AppSheet can use to call this API          |
 
 ## Configuration in AppSheet
 
